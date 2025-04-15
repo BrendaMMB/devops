@@ -1,0 +1,35 @@
+# Bytecode
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Editor / IDE
+.vscode/
+.idea/
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Arquivos de ambiente / config
+.env
+config.json
+
+# Logs e temporários
+*.log
+*.tmp
+
+# SQLite (se estiver usando)
+*.sqlite3
+
+# Arquivos de pacotes
+*.egg-info/
+dist/
+build/
+
+# Jupyter (caso use)
+.ipynb_checkpoints/
+
+# Arquivos exportados
+*.csv
+*.xlsx
