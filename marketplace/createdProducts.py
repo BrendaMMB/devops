@@ -51,7 +51,7 @@ def cadastrar_produto(produto):
     # Envia requisição
     response = requests.post(url, headers=headers, json=payload)
 
-    # Resultado
+    # Resultado com sucesso é 202 neste caso
     if response.status_code in [202]:
         print(f"✅ Produto SKU {produto['sku']} cadastrado com sucesso.")
     else:
