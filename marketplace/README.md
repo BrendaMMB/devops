@@ -79,7 +79,3 @@ Ele contém dados sensíveis como seu token de acesso e identificador de cliente
 ✔️ Sempre utilize `config.example.json` como base para compartilhar o formato do arquivo com outras pessoas.
 
 ---
-
-## 📄 Licença
-
-Este projeto está licenciado sob a licença MIT.
