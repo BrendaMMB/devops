@@ -1,37 +1,10 @@
-name: Teste Criação de PR CI/CD
+name: Teste Manual CI/CD
 
 on:
   workflow_dispatch:
 
 jobs:
-  cria-pr:
+  hello:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Configura Git
-        run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@users.noreply.github.com"
-
-      - name: Cria nova branch e push
-        run: |
-          git checkout -b ci_cd_formativa_w3
-          echo "# Teste de workflow" >> teste.md
-          git add teste.md
-          git commit -m "feat: adiciona arquivo de teste para CI/CD"
-          git push https://x-access-token:${{ secrets.GH_PAT }}@github.com/${{ github.repository }} ci_cd_formativa_w3
-
-      - name: Instala GitHub CLI
-        uses: cli/cli-action@v2
-
-      - name: Cria Pull Request
-        run: |
-          gh pr create --title "Teste de PR CI/CD" \
-                       --body "PR criado automaticamente para testar fluxo" \
-                       --base main \
-                       --head ci_cd_formativa_w3
-        env:
-          GH_TOKEN: ${{ secrets.GH_PAT }}
+      - run: echo "Workflow disparado manualmente com sucesso!"
