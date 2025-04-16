@@ -1,0 +1,22 @@
+name: CI/CD - Merge automático
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  merge-pr:
+    if: github.actor == 'github-actions[bot]'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Instala GitHub CLI
+        uses: cli/cli-action@v2
+
+      - name: Faz merge automático
+        run: |
+          echo "Esperando CI passar..."
+          sleep 30
+          gh pr merge "$GITHUB_HEAD_REF" --merge --admin --repo ${{ github.repository }}
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
