@@ -1,0 +1,48 @@
+name: CI/CD Pull-Request Automatic & Merge
+
+on:
+  push:
+    paths:
+      - '.github/workflows/github-actions.yml'
+      - '.github/workflows/github-actions-cd.yml'
+
+jobs:
+  create-pr:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Configurar Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Cria nova branch
+        run: |
+          git checkout -b ci_cd_formativa_w3
+          git add .github/workflows/github-actions.yml .github/workflows/github-actions-cd.yml
+          git commit -m "Atualizar workflows CI/CD"
+          git push https://x-access-token:${{ secrets.GH_PAT }}@github.com/${{ github.repository }} ci_cd_formativa_w3
+
+      - name: Cria Pull Request
+        id: create_pr
+        run: |
+          gh pr create \
+            --title "Atualização CI/CD" \
+            --body "Atualizando arquivos do workflow" \
+            --base main \
+            --head ci_cd_formativa_w3 \
+            --repo ${{ github.repository }}
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+
+      - name: Faz merge automático
+        run: |
+          gh pr merge ci_cd_formativa_w3 \
+            --merge \
+            --admin \
+            --repo ${{ github.repository }}
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
