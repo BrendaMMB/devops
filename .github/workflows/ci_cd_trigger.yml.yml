@@ -1,0 +1,24 @@
+name: CI/CD Pull-Request Automatic & Merge
+
+on:
+  workflow_dispatch:
+
+jobs:
+  trigger_ci_cd:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configura Git
+        run: |
+          git config user.name "github-actions"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Cria ou atualiza branch ci_cd_formativa_w3
+        run: |
+          git checkout -b ci_cd_formativa_w3 || git checkout ci_cd_formativa_w3
+          git add .github/workflows/github-actions.yml .github/workflows/github-actions-cd.yml
+          git commit -m "feat(ci-cd): atualiza workflows CI/CD" || echo "Sem alterações para commitar"
+          git push https://x-access-token:${
