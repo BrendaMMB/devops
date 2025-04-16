@@ -18,7 +18,7 @@ def cadastrar_produto(produto):
         "Content-Type": "application/json"
     }
 
-    # Monta o payload do produto
+    # Monta o payload do produto com base dos produtos.csv
     payload = {
         "sku": produto["sku"],
         "productGroup": produto["productGroup"],
