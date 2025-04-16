@@ -18,3 +18,10 @@ jobs:
         uses: advanced-security/python-lint-code-scanning-action@v1.1.2
         with:
           linter: pylint
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Simulando deploy após CI
+        run: echo "Deploy feito com sucesso após build"
