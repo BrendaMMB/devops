@@ -1,0 +1,58 @@
+name: CI/CD Auto PR and Merge
+
+on:
+  push:
+    paths:
+      - '.github/workflows/github-actions.yml'
+      - '.github/workflows/github-actions-cd.yml'
+
+jobs:
+  auto-pr:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Configura Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Cria nova branch
+        run: |
+          git checkout -b ci_cd_formativa_w3
+          git add .github/workflows/github-actions.yml .github/workflows/github-actions-cd.yml
+          git commit -m "Atualiza workflows CI/CD"
+          git push https://x-access-token:${{ secrets.GH_PAT }}@github.com/${{ github.repository }} ci_cd_formativa_w3
+
+      - name: Instala GitHub CLI
+        uses: cli/cli-action@v2
+
+      - name: Cria Pull Request
+        id: create_pr
+        run: |
+          gh pr create \
+            --title "Atualização CI/CD" \
+            --body "Atualizando arquivos de workflow" \
+            --base main \
+            --head ci_cd_formativa_w3 \
+            --repo ${{ github.repository }} \
+            --draft
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+
+      - name: Aguarda status checks (CI)
+        run: |
+          echo "Aguardando CI executar antes de merge..."
+          sleep 60  # você pode melhorar isso usando `gh pr checks` se quiser algo mais robusto
+
+      - name: Publica o PR e faz merge
+        run: |
+          gh pr ready ci_cd_formativa_w3 --repo ${{ github.repository }}
+          gh pr merge ci_cd_formativa_w3 \
+            --merge \
+            --admin \
+            --repo ${{ github.repository }}
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
