@@ -1,0 +1,22 @@
+name: Continuous Delivery - Testing
+on:
+  push:
+    branches:
+      - main # ou qualquer branch
+
+jobs:
+  deliver:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+
+      - name: Simulation CD
+        uses: actions/upload-artifact@v4
+        with:
+          name: project.zip
+          path: |
+            '**.py'
+            README.md
+            produtos.csv
+            config.example.json
