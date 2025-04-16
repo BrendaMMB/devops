@@ -1,0 +1,53 @@
+name: CI/CD Pull-Request Automatic & Merge
+
+on:
+  workflow_dispatch:
+
+jobs:
+  ci_cd_auto:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Configura Git
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@users.noreply.github.com"
+
+      - name: Cria ou atualiza branch ci_cd_formativa_w3
+        run: |
+          git checkout -b ci_cd_formativa_w3 || git checkout ci_cd_formativa_w3
+          echo "# Atualização automática do CI/CD" >> update.txt
+          git add update.txt
+          git commit -m "feat: atualiza CI/CD automaticamente" || echo "Sem alterações para commitar"
+          git push https://x-access-token:${{ secrets.GH_PAT }}@github.com/${{ github.repository }} ci_cd_formativa_w3
+
+      - name: Instala GitHub CLI
+        uses: cli/cli-action@v2
+
+      - name: Cria PR automaticamente
+        run: |
+          gh pr create \
+            --title "Atualização CI/CD" \
+            --body "PR criado automaticamente via workflow para atualização dos arquivos CI/CD." \
+            --base main \
+            --head ci_cd_formativa_w3 \
+            --repo ${{ github.repository }} || echo "PR já existe ou erro ignorado"
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+
+      - name: Aguarda CI rodar
+        run: |
+          echo "Aguardando CI..."
+          sleep 60  # ou gh pr checks se quiser avançado
+
+      - name: Faz merge automático do PR
+        run: |
+          gh pr merge ci_cd_formativa_w3 \
+            --merge \
+            --admin \
+            --repo ${{ github.repository }}
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
