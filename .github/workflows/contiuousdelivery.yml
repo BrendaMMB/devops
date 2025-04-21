@@ -18,3 +18,4 @@ jobs:
           path: |
             **.py
             README.md
+            produtos.csv
