@@ -19,3 +19,13 @@ jobs:
             **.py
             README.md
             produtos.csv
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: deliver
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: my-artifact
+      - name: Display structure of downloaded files
+        run: ls -R
