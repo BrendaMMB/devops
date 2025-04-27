@@ -36,4 +36,4 @@ jobs:
 
       - name: Executar testes
         run: |
-          pytest test/
+          pytest tests/
