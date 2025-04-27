@@ -6,14 +6,25 @@ import time
 from datetime import datetime
 
 # Carrega as configurações de client_id, access_token e base_url, delay_seconds e path do csv
-with open('../config.json') as f:
-    config = json.load(f)
+CLIENT_ID = None
+ACCESS_TOKEN = None
+BASE_URL = None
+DELAY_SECONDS = None
+PRODUTOS_CSV_PATH = None
 
-CLIENT_ID = config["client_id"]
-ACCESS_TOKEN = config["access_token"]
-BASE_URL = config["base_url"]
-DELAY_SECONDS = config.get("delay_seconds", 15)
-PRODUTOS_CSV_PATH = config.get("produtos_csv_path", "../produtos.csv")  # padrão se não achar
+
+def carregar_config():
+    global CLIENT_ID, ACCESS_TOKEN, BASE_URL, DELAY_SECONDS, PRODUTOS_CSV_PATH
+
+    caminho_config = os.path.join(os.path.dirname(__file__), "../config.json")
+    with open(caminho_config) as f:
+        config = json.load(f)
+
+    CLIENT_ID = config["client_id"]
+    ACCESS_TOKEN = config["access_token"]
+    BASE_URL = config["base_url"]
+    DELAY_SECONDS = config.get("delay_seconds", 15)
+    PRODUTOS_CSV_PATH = config.get("produtos_csv_path", "../produtos.csv")  # padrão se não achar
 
 # Nome do arquivo de log
 LOG_CSV = "../log_cadastro.csv"
@@ -215,5 +226,6 @@ def processar_produtos_csv(caminho_csv):
 
 # Execução principal
 if __name__ == "__main__":
+    carregar_config()
     caminho_csv = os.path.abspath(os.path.join(os.path.dirname(__file__), PRODUTOS_CSV_PATH))
     processar_produtos_csv(caminho_csv)
