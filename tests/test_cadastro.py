@@ -29,7 +29,7 @@ produto_exemplo = {
     "stockQuantity": "10"
 }
 
-@patch("src.main.requests.post")
+@patch("src.createdProducts.requests.post")
 def test_cadastrar_produto_sucesso(mock_post):
     mock_post.return_value.status_code = 202
 
@@ -38,7 +38,7 @@ def test_cadastrar_produto_sucesso(mock_post):
     assert resposta["status"] == "sucesso"
     assert "Status 202" in resposta["detalhes"]
 
-@patch("src.main.requests.post")
+@patch("src.createdProducts.requests.post")
 def test_cadastrar_preco_sucesso(mock_post):
     mock_post.return_value.status_code = 202
 
@@ -47,7 +47,7 @@ def test_cadastrar_preco_sucesso(mock_post):
     assert resposta["status"] == "sucesso"
     assert "Status 202" in resposta["detalhes"]
 
-@patch("src.main.requests.post")
+@patch("src.createdProducts.requests.post")
 def test_cadastrar_estoque_sucesso(mock_post):
     mock_post.return_value.status_code = 202
 
