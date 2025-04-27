@@ -11,5 +11,26 @@ jobs:
         uses: Sniddl/discord-commits@v1.6
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
-          template: "avatar-with-link"
-          include-extras: true
+          embed: |
+            {
+              "title": "🚀 Novo Pull Request Aberto!",
+              "url": "${{ github.event.pull_request.html_url }}",
+              "description": "**${{ github.event.pull_request.title }}**\n\n> Autor: [${{ github.actor }}](https://github.com/${{ github.actor }})",
+              "color": 5814783,
+              "fields": [
+                {
+                  "name": "Branch de Origem",
+                  "value": "${{ github.event.pull_request.head.ref }}",
+                  "inline": true
+                },
+                {
+                  "name": "Branch de Destino",
+                  "value": "${{ github.event.pull_request.base.ref }}",
+                  "inline": true
+                }
+              ],
+              "footer": {
+                "text": "Repo: ${{ github.repository }}"
+              },
+              "timestamp": "${{ github.event.pull_request.created_at }}"
+            }
