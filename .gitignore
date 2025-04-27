@@ -32,3 +32,4 @@ build/
 
 # Arquivos exportados
 *.xlsx
+log_cadastro.csv

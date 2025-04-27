@@ -1,5 +1,7 @@
 {
   "client_id": "SUA_CLIENT_ID_AQUI",
   "access_token": "SEU_ACCESS_TOKEN_AQUI",
-  "base_url": "https://sandboxapi-marketplace.netshoes.com.br"
+  "base_url": "https://sandboxapi-marketplace.netshoes.com.br",
+  "delay_seconds": 15,
+  "produtos_csv_path": "../produtos.csv"
 }
