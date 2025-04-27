@@ -19,7 +19,7 @@ PRODUTOS_CSV_PATH = config.get("produtos_csv_path", "../produtos.csv")  # padrã
 LOG_CSV = "../log_cadastro.csv"
 
 
-# Inicializa o log
+# Inicializa o log para futuras análises
 def inicializar_log():
     if not os.path.exists(LOG_CSV):
         with open(LOG_CSV, mode='w', newline='', encoding='utf-8') as log_file:
