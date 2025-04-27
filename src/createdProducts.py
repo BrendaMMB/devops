@@ -5,7 +5,7 @@ import os
 import time
 from datetime import datetime
 
-# Carrega as configurações de client_id, access_token e base_url
+# Carrega as configurações de client_id, access_token e base_url, delay_seconds e path do csv
 with open('../config.json') as f:
     config = json.load(f)
 
