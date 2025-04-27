@@ -53,7 +53,7 @@ def cadastrar_produto(produto):
 
     # Resultado com sucesso é 202 neste caso
     if response.status_code in [202]:
-        print(f"✅ Produto SKU {produto['sku']} cadastrado com sucesso.")
+        print(f"✅ Produto com SKU {produto['sku']} cadastrado com sucesso.")
     else:
         print(f"❌ Erro ao cadastrar SKU {produto['sku']}: {response.status_code}")
         print(response.text)
