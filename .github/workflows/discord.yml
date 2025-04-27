@@ -1,6 +1,8 @@
 name: Discord
 on:
-  - push
+  push:
+    branches:
+      - '**'  # Escuta todos os pushes para todas as branches
 
 jobs:
   discord:
@@ -13,24 +15,27 @@ jobs:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
           embed: |
             {
-              "title": "🚀 Novo Pull Request Aberto!",
-              "url": "${{ github.event.pull_request.html_url }}",
-              "description": "**${{ github.event.pull_request.title }}**\n\n> Autor: [${{ github.actor }}](https://github.com/${{ github.actor }})",
+              "title": "📦 Novo Push Realizado!",
+              "description": "**[${{ github.event.head_commit.message }}](${{ github.event.head_commit.url }})**",
               "color": 5814783,
               "fields": [
                 {
-                  "name": "Branch de Origem",
-                  "value": "${{ github.event.pull_request.head.ref }}",
+                  "name": "Autor",
+                  "value": "[${{ github.actor }}](https://github.com/${{ github.actor }})",
                   "inline": true
                 },
                 {
-                  "name": "Branch de Destino",
-                  "value": "${{ github.event.pull_request.base.ref }}",
+                  "name": "Branch",
+                  "value": "`${{ github.ref_name }}`",
                   "inline": true
+                },
+                {
+                  "name": "Ver Commit",
+                  "value": "[Clique aqui](${{ github.event.head_commit.url }})"
                 }
               ],
               "footer": {
                 "text": "Repo: ${{ github.repository }}"
               },
-              "timestamp": "${{ github.event.pull_request.created_at }}"
+              "timestamp": "${{ github.event.head_commit.timestamp }}"
             }
