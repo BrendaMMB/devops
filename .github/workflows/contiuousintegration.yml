@@ -48,3 +48,27 @@ jobs:
           path: |
             pytest-report.xml
             pytest-report.html
+
+      - name: Instalar Allure CLI
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y openjdk-11-jre
+          curl -o allure.tgz -L https://github.com/allure-framework/allure2/releases/download/2.25.0/allure-2.25.0.tgz
+          tar -zxvf allure.tgz
+          sudo mv allure-2.25.0 /opt/allure
+          sudo ln -s /opt/allure/bin/allure /usr/bin/allure
+          allure --version
+
+      - name: Executar testes e gerar resultados Allure
+        run: |
+          pytest tests/ --alluredir=allure-results/
+
+      - name: Gerar Relatório Allure HTML
+        run: |
+          allure generate allure-results/ -o allure-report/ --clean
+
+      - name: Publicar Relatório Allure
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report
+          path: allure-report/
