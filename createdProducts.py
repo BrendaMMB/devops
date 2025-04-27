@@ -48,7 +48,7 @@ def cadastrar_produto(produto):
         ]
     }
 
-    # Envia requisição
+    # Envia requisição da API
     response = requests.post(url, headers=headers, json=payload)
 
     # Resultado com sucesso é 202 neste caso
