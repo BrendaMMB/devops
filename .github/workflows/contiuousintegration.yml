@@ -39,4 +39,12 @@ jobs:
 
       - name: Executar testes
         run: |
-          pytest tests/
+          pytest tests/ --junitxml=pytest-report.xml --html=pytest-report.html
+
+      - name: Publicar Relatórios
+        uses: actions/upload-artifact@v4
+        with:
+          name: pytest-reports
+          path: |
+            pytest-report.xml
+            pytest-report.html
